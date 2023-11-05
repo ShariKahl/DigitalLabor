@@ -1,8 +1,8 @@
 /*
  * Aufgabe_2_3.S
  *
- *  Created on: <$Date>
- *      Author: <$Name>
+ *  Created on: 31.10.2023
+ *      Author: Shari Kahl
  *
  *	Aufgabe : Werte Binarisieren
  */
