@@ -10,31 +10,46 @@
 .code 32 /* Select ARM instruction set */
 .global main /* Specify global symbol */
 main:
-		/* Initialize registers */
-		mov r8, #0  /* Clear result for lower 32 bits */
-		mov r9, #0  /* Clear result for upper 32 bits */
-		mov r10, #0 /* Clear carry register */
+      //64-Bit-Addition 
 
-		/* First addition: Add the least significant 32-bit words */
-		ldr r0, [R0] /* Load the first 32-bit word from memory into r0 */
-		ldr r1, [R1] /* Load the second 32-bit word from memory into r1 */
-		adds r8, r0, r1 /* Add r0 and r1, result in r8 */
+      /* Eingabezahlen in R0 bis R3, die einen Überlauf verursachen */
+      LDR R0, =0x80000000
+      LDR R1, =0x80000000
+      LDR R2, =0x80000000
+      LDR R3, =0x80000000
 
-		/* Check for carry */
-		adc r10, #0 /* Add carry to r10 */
+      /* Eingabezahlen in R0 bis R3, die keinen Überlauf verursachen
+      LDR R0, =0x00000001
+      LDR R1, =0x00000001
+      LDR R2, =0x00000001
+      LDR R3, =0x00000001 */
 
-		/* Second addition: Add the most significant 32-bit words */
-		ldr r2, [R2] /* Load the third 32-bit word from memory into r2 */
-		ldr r3, [R3] /* Load the fourth 32-bit word from memory into r3 */
-		adds r9, r2, r3 /* Add r2 and r3, result in r9 */
+      //Ergebnis in R8, R9 und R10 für Überlauf
+      MOV R8, #0
+      MOV R9, #0
+      MOV R10, #0
 
-		/* Check for carry */
-		adc r10, r10, #0 /* Add carry to r10 */
+      //niederwertigen Zahlen addieren
+      ADDS R8, R1, R3      //(R8 = R1 + R3) + Carry-Flag setzen
 
-		/* Third addition: Add the carry from the second addition */
-		adc r9, r10, r9 /* Add carry to the upper 32 bits */
+    //Überlauf der unteren 32-Bit-Addition prüfen
+    BCS LowOverflow        //Überlauf bei der unteren 32-Bit-Addition
 
-		/* r8 and r9 now hold the result of the 64-bit addition */
+      ADD R9, R0, R2       // (R9 = R0 + R2)
+
+      LowOverflow:
+      //höherwertigen Zahlen addieren
+      ADC R9, R0, R2       // (R9 = R0 + R2 + Carry)
+
+
+    //Überlauf der oberen 32-Bit-Addition prüfen
+    BCS HighOverflow       //Überlauf bei der unteren 32-Bit-Addition
+
+      ADD R10, R9, R8      // (R10 = R9 + R8)
+
+      HighOverflow:
+      ADC R10, R9, R8      // (R10 = R9 + R8 + Carry)
+
     
 stop:
     nop
