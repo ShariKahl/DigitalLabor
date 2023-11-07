@@ -12,9 +12,13 @@
 main:
     //Vorzeichenlose Multiplikation durch wiederholte Addition
 
-    //Multiplikand und Multiplikator in R0 und R1 speichern
+    /* Multiplikand und Multiplikator in R0 und R1 speichern, die einen Überlauf verursachen */
+    LDR R0, =858993460 	//Multiplikand
+    LDR R1, =5			//Multiplikator
+
+    /* Multiplikand und Multiplikator in R0 und R1 speichern, die keinen Überlauf verursachen
     LDR R0, =10 		//Multiplikand
-    LDR R1, =3 			//Multiplikator
+    LDR R1, =3 			//Multiplikator */
 
     //Ergebnis in R2 und Überlauf in R3 initialisieren
     MOV R2, #0 					//Ergebnis
