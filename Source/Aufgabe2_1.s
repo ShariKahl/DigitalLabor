@@ -10,7 +10,7 @@
 .code 32 /* Select ARM instruction set */
 .global main /* Specify global symbol */
 main:
-      //64-Bit-Addition 
+      //64-Bit-Addition mit Sprüngen
 
       /* Eingabezahlen in R0 bis R3, die einen Überlauf verursachen */
       LDR R0, =0x80000000
