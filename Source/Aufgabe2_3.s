@@ -13,27 +13,35 @@ main:
 		/* Register zur Speicherung der binarisierten Werte initialisieren */
 		MOV R0, #0
 
-		/* Speicheradresse der ersten 32-Bit-Zahl (Annahme: 0x1000) */
-		LDR R1, =0x1000
+		/* Datenmenge auf 8 initialisieren */
+		MOV R1, #8
+
+		/* Datenzeiger initialisieren (Annahme: Speicheradresse 0x1000) */
+		LDR R2, =0x1000
 
 		/* Schleife zur Binarisierung der Daten */
 		binarize_loop:
 			/* Wert aus dem Speicher laden */
-			LDR R2, [R1]
+			LDR R3, [R2]
 
-			/* Prüfen, ob das MSB des Werts gesetzt ist */
-			TST R2, #0x80000000
+			/* Datenzeiger auf die nächste Adresse verschieben */
+			ADD R2, R2, #4
 
-			/* Das MSB in das Register R0 speichern (nach links schieben, wenn MSB gesetzt ist) */
-			ADREQ R0, R0, LSL #1
+			/* Prüfen, ob der Wert größer als der Schwellenwert ist (z.B., 0x80000000) */
+			CMP R3, #0x80000000
+			MOVHI R3, #1   /* Wenn der Wert größer ist, setze ihn auf 1 */
+			MOVLS R3, #0   /* Andernfalls setze ihn auf 0 */
 
-			/* Datenzeiger auf die nächste Adresse verschieben (nächste 32-Bit-Zahl) */
-			ADD R1, R1, #4
+			/* Binarisierten Wert mit dem Register R0 verodern */
+			ORR R0, R0, R3
 
-			/* Verringere die Anzahl der noch zu binarisierenden Werte */
-			SUBS R3, R3, #1
+			/* Register R0 um ein Byte (8 Bit) nach links verschieben */
+			LSL R0, R0, #8
 
-			/* Schleifenbedingung prüfen (Anzahl der Werte > 0) */
+			/* Verringere die Datenmenge um 1 */
+			SUBS R1, R1, #1
+
+			/* Schleifenbedingung prüfen (Datenmenge > 0) */
 			BGT binarize_loop
 
 stop:
