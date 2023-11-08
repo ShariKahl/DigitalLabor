@@ -1,7 +1,7 @@
 /*
  * Aufgabe_2_3.S
  *
- *  Created on: 31.10.2023
+ *  Created on: 07.11.2023
  *      Author: Shari Kahl
  *
  *	Aufgabe : Werte Binarisieren
