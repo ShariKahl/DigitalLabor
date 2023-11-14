@@ -141,9 +141,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="37" useTextEdit="1" path="Source/Aufgabe2_1.s" left="0" selected="1" top="5" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="39" y="30" useTextEdit="1" path="Source/Aufgabe2_2.s" left="0" top="11" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="38" useTextEdit="1" path="Source/Aufgabe2_3.s" left="0" top="14" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="25" y="16" useTextEdit="1" path="Source/Aufgabe2_1.s" left="0" top="5" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="12" y="26" useTextEdit="1" path="Source/Aufgabe2_2.s" left="0" top="11" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="10" y="33" useTextEdit="1" path="Source/Aufgabe2_3.s" left="0" selected="1" top="14" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="105" useTextEdit="1" path="System/crt0.s" left="0" top="85" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="Aufgabe2" fileDialogDefaultFilter="*.asm;*.s;*.inc" autoConnectTarget="Simulator" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="C:/hs/dtl/EmbeddedStudio/System" debugSearchPath="" autoConnectCapabilities="4415"/>
