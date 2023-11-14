@@ -32,25 +32,10 @@ main:
       //niederwertigen Zahlen addieren
       ADDS R8, R1, R3      //(R8 = R1 + R3) + Carry-Flag setzen
 
-    //Überlauf der unteren 32-Bit-Addition prüfen
-    BCS LowOverflow        //Überlauf bei der unteren 32-Bit-Addition
-
-      ADD R9, R0, R2       // (R9 = R0 + R2)
-
-      LowOverflow:
       //höherwertigen Zahlen addieren
-      ADC R9, R0, R2       // (R9 = R0 + R2 + Carry)
+      ADCS R9, R0, R2       // (R9 = R0 + R2 + Carry)
+      MOVCS R10, #1
 
-
-    //Überlauf der oberen 32-Bit-Addition prüfen
-    BCS HighOverflow       //Überlauf bei der unteren 32-Bit-Addition
-
-      ADD R10, R9, R8      // (R10 = R9 + R8)
-
-      HighOverflow:
-      ADC R10, R9, R8      // (R10 = R9 + R8 + Carry)
-
-    
 stop:
     nop
     bal stop

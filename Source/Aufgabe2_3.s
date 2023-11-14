@@ -9,40 +9,45 @@
 .text /* Specify that code goes in text segment */
 .code 32 /* Select ARM instruction set */
 .global main /* Specify global symbol */
+
+  //Werte initialisieren
+variable_werte:
+  .word 100, 5896, 44, 0, 123, 987, 0, 65231
+
 main:
-		/* Register zur Speicherung der binarisierten Werte initialisieren */
-		MOV R0, #0
 
-		/* Datenmenge auf 8 initialisieren */
-		MOV R1, #8
+  //Register initialisieren
+  LDR R0, =0
+  
+  //Schwellenwert initialisieren
+  LDR R1, =400
 
-		/* Datenzeiger initialisieren (Annahme: Speicheradresse 0x1000) */
-		LDR R2, =0x1000
+  //Werte laden
+  LDR R2, =variable_werte
 
-		/* Schleife zur Binarisierung der Daten */
-		binarize_loop:
-			/* Wert aus dem Speicher laden */
-			LDR R3, [R2]
+  //Datenmenge initialisieren
+  LDR R3, =8
 
-			/* Datenzeiger auf die nächste Adresse verschieben */
-			ADD R2, R2, #4
+  //Veroderung initialisieren
+  LDR R4, =0
+  
+  //Werteregister initialisieren
+  LDR R5, =0
 
-			/* Prüfen, ob der Wert größer als der Schwellenwert ist (z.B., 0x80000000) */
-			CMP R3, #0x80000000
-			MOVHI R3, #1   /* Wenn der Wert größer ist, setze ihn auf 1 */
-			MOVLS R3, #0   /* Andernfalls setze ihn auf 0 */
+loop:
+    MOV R5, R5, LSL #1        //R5 = R5 <<1 Inhalt von R0 um eine Stelle nach links verschieben
 
-			/* Binarisierten Wert mit dem Register R0 verodern */
-			ORR R0, R0, R3
+    LDR R0, [R2], #4          //Wert aus dem Speicher laden und den Zeiger auf die nächste Adresse verschieben
+    CMP R0, R1                //Wert > Schwellenwert (400) prüfen
 
-			/* Register R0 um ein Byte (8 Bit) nach links verschieben */
-			LSL R0, R0, #8
+    MOVGT R4, #1              //Wenn Wert > 400, setze R4 auf 1
+    MOVLE R4, #0              //Andernfalls, setze R4 auf 0
 
-			/* Verringere die Datenmenge um 1 */
-			SUBS R1, R1, #1
+    ORR R5, R4                //beide Werte mit ODER verknüpfen
+    
+    SUBS R3, R3, #1           //Datenmenge um 1 verringern
 
-			/* Schleifenbedingung prüfen (Datenmenge > 0) */
-			BGT binarize_loop
+    BNE loop                  //Schleife wiederholen, bis Datenmenge > 0
 
 stop:
     nop
