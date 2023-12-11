@@ -1,87 +1,46 @@
 /*
  * Aufgabe_3_4.S
  *
- *  Created on: <$Date>
- *      Author: <$Name>
+ *  Created on: 27.11.2023
+ *      Author: Shari Kahl
  *
- *	Aufgabe : nterprogrammaufruf mit Übergebe von mehreren Parametern - Division
+ *	Aufgabe : Unterprogrammaufruf mit Übergebe von mehreren Parametern - Division
  */
 .text /* Specify that code goes in text segment */
 .code 32 /* Select ARM instruction set */
 .global main /* Specify global symbol */
-main:
 
+.equ dividend, 10
+.equ divisor, 3
+
+main:
+        LDR R0, =dividend       // Dividend in R0 laden
+        LDR R1, =divisor        // Divisor in R1 laden
+
+        BL division             // Division aufrufen
 
 stop:
 	nop
 	bal stop
 
+        division:
+        MOV R2, #0              // Ergebnis
+        MOV R3, #0              // Rest
+        MOV R4, #0              // Fehlerregister
+
+        CMP R1, #0               // Prüfen, ob Divisor = 0
+        MOVEQ R4, #1             // Fehler-Flag setzen
+        BEQ division_error       // Wenn Divisor = 0, Fehlerbehandlung
+
+division_subtract:
+        ADDS R2, #1              // Ergebnis erhöhen
+        SUBS R0, R1              // Dividend - Divisor
+
+        BGT division_subtract
+
+        ADDLT R0, R1             
+        SUBLT R3, #1               
+
+division_error:
+        BX LR    
 .end
-
-/*
-.global _start
-.type impartire, %function
-
-impartire:
-	ldr r1,[r0]
-	ldr r2,[r0, #4]
-	mov r3, #0
-	cmp r2, #0
-	beq stop1
-	bne continuare
-	
-stop1:
-nop
-bal end
-
-continuare:
-	
-loopscadere:
-	sub r1, r2
-	add r3, #1
-	cmp r1, #0
-	bge biggerOrEqual
-less:
-	nop
-	sub r3, #1
-	add r1, r2
-	
-	bx lr
-biggerOrEqual:
-	b loopscadere 
-
-
-	bx lr
-	
-_start:
-	
-
-numere:
-.word 27, 3
-
-rezultat:
-.word 0
-
-rest:
-.word 0
-
-
-ldr r0 , =numere
-
-bl impartire
-
-ldr r4, =rezultat
-ldr r5, =rest
-
-mov r4, r3
-mov r5, r1
-
-ldr r6, =rezultat
-	
-
-
-stop:
-nop
-bal stop
-
-.end*/

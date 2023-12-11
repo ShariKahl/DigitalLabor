@@ -103,7 +103,7 @@
     </folder>
     <folder Name="Source">
       <file file_name="Source/Aufgabe2_1.s">
-        <configuration Name="Debug" build_exclude_from_build="No" />
+        <configuration Name="Debug" build_exclude_from_build="Yes" />
       </file>
       <file file_name="Source/Aufgabe2_2.s">
         <configuration Name="Debug" build_exclude_from_build="Yes" />
@@ -152,7 +152,9 @@
       <file file_name="Setup/sram_placement.xml" />
     </folder>
     <folder Name="Source">
-      <file file_name="Source/Aufgabe3_1.s" />
+      <file file_name="Source/Aufgabe3_1.s">
+        <configuration Name="Debug" build_exclude_from_build="Yes" />
+      </file>
       <file file_name="Source/Aufgabe3_2.s">
         <configuration Name="Debug" build_exclude_from_build="Yes" />
       </file>
@@ -205,9 +207,11 @@
       <file file_name="Setup/sram_placement.xml" />
     </folder>
     <folder Name="Source">
-      <file file_name="Source/Aufgabe4_1.s" />
-      <file file_name="Source/Aufgabe4_2.s">
+      <file file_name="Source/Aufgabe4_1.s">
         <configuration Name="Debug" build_exclude_from_build="Yes" />
+      </file>
+      <file file_name="Source/Aufgabe4_2.s">
+        <configuration Name="Debug" build_exclude_from_build="No" />
       </file>
       <file file_name="Source/Aufgabe4_3.s">
         <configuration Name="Debug" build_exclude_from_build="Yes" />
