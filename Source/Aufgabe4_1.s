@@ -6,67 +6,47 @@
  *
  *	Aufgabe : Verwendung von Stack
  */
-.text /* Specify that code goes in text segment */
-.code 32 /* Select ARM instruction set */
-.global main /* Specify global symbol */
+.text /* Specify that code goes in text segment /
+.code 32 / Select ARM instruction set /
+.global main / Specify global symbol */
 main:
-    //Ergebnis in R2 und Überlauf in R3 initialisieren
-    mov r0, #0x44
-    mov r1, #0x55
+    mov r0, #0x44                   //Setze den Wert von Register r0 auf 0x44 
+    mov r1, #0x55                   //Setze den Wert von Register r1 auf 0x55
 
-    bl function1
-    bl function1
-    bl function1
-    bl stop
+    //Drei mal zur Funktion function1 springen
+    bl function1 
+    bl function1 
+    bl function1 
+
+    b stop 
 
 function1:
-    // Platz für lokale Variablen auf dem Stack reservieren
-    // Für a (uint8 = 5), b (int16 = -6), und c (uint32 = 0)
-    push {r4, lr} // Speicherplatz für a, b und c reservieren
-    ldr r4, [sp,#4]
+    stmfd sp!,{r0,r1,lr}            // r0, r1 auf dem Stack speichern/retten, Linkregister auf dem Stack speichern, Fkt verwendet r0, r1 für temporäre Daten.
 
-    // Variablen initialisieren
-    mov r4, #5      // a = 5
-    mov r5, #-6     // b = -6
-    mov r6, #0      // c = 0
+    mov r0, #5                      // Lokale 8Bit Variable mit dem Wert 5 initialisieren
+    strb r0,[sp,#2]                 // 8 Bit Variable auf dem Stack ablegen 2 Bytes vom Stapelzeiger
 
-    // Die Werte von a und b in R0 und R1 laden
-    mov r0, r4      // a in R0 laden
-    mov r1, r5      // b in R1 laden
+    mov r0, #-6                     // Lokale 16Bit Variable mit dem Wert 5 initialisieren
+    strh r0,[sp]                    // 16 Bit Variable auf dem Stack ablegen
 
-    // Zweite Funktion aufrufen
-    bl function2
+    ldrb r0, [sp,#2]                //Lade ein Byte vom Speicher, 2 Bytes vom Stapelzeiger, in r0 
+    ldrsh r1,[sp,#0]                //Lade ein halbes Wort (mit Vorzeichen) vom Speicher am Stapelzeiger in r1 
 
-    // Rückgabewert in c speichern
-    mov r6, r0      // Rückgabewert von function2 in c speichern
+    bl function2 
 
-    pop {r4, lr}   // Stack bereinigen
+    str r0,[sp, #4]                 // Lade Wert von r0 4 Bytes vom Stapelzeiger entfernt im Speicher 
 
-    bx lr           // Funktion beenden und zurückkehren
+    ldmfd sp!, {r0,r1,pc}           // r0, r1 von Stack holen, Linkregister von Stack holen und in dem PC Speichen was einem
+                                    // Rücksprung an die Aufruferaderesse entspricht
 
 function2:
-    // Variablen für die Funktion2 (falls erforderlich)
-    push {r4, r5, lr} // Speicherplatz für temporäre Variablen und Rückkehradresse reservieren
+    adds r0,r0,r1                   // r0+r1 = Ergebnis in r0
+    rsbmi r0,r0,#0                  // Falls das Ergebnis negativ ist, invertiere es 
 
-    // Werte von R0 und R1 addieren
-    add r4, r0, r1    // r4 = R0 + R1
-
-    // Absolutwert der Summe berechnen
-    cmp r4, #0        // Vergleiche r4 mit 0
-    bge positiv      // Springe zu positiv, wenn r4 >= 0
-    neg r4, r4        // Sonst negiere r4 (also positiv)
-
-positiv:
-    // Rückgabewert in R0 speichern
-    mov r0, r4        // Absolutwert in R0 speichern
-
-    pop {r4, r5, lr}  // Stack bereinigen
-
-    bx lr             // Funktion beenden und zurückkehren
-
+    bx lr
 
 stop:
-	nop
-	bal stop
+    nop 
+    bal stop 
 
 .end
