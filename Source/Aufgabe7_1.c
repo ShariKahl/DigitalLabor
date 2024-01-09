@@ -11,9 +11,9 @@
 
 #include <stdint.h>
 
-#define CONSTANT_A 0x12345678
-#define CONSTANT_LOW 0xAB
-#define CONSTANT_HIGH 0xCD
+#define CONSTANT_A 0b00010010001101000101011001111000
+#define CONSTANT_LOW 0xCD
+#define CONSTANT_HIGH 0xAB
 
 int main() {
     uint32_t A = CONSTANT_A;
