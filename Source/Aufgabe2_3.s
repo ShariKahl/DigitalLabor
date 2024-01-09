@@ -37,13 +37,13 @@ main:
 loop:
     MOV R5, R5, LSL #1        //R5 = R5 <<1 Inhalt von R0 um eine Stelle nach links verschieben
 
-    LDR R0, [R2], #4          //Wert aus dem Speicher laden und den Zeiger auf die nächste Adresse verschieben
-    CMP R0, R1                //Wert > Schwellenwert (400) prüfen
+    LDR R0, [R2], #4          //Wert aus dem Speicher laden und den Zeiger auf die nchste Adresse verschieben
+    CMP R0, R1                //Wert > Schwellenwert (400) prfen
 
     MOVGT R4, #1              //Wenn Wert > 400, setze R4 auf 1
     MOVLE R4, #0              //Andernfalls, setze R4 auf 0
 
-    ORR R5, R4                //beide Werte mit ODER verknüpfen
+    ORR R5, R4                //beide Werte mit ODER verknpfen
     
     SUBS R3, R3, #1           //Datenmenge um 1 verringern
 
