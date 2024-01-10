@@ -37,7 +37,7 @@ loop:
 
 delay:
   PUSH {R0, R1}             //Arbeitsregister speichern / Register auf den Stack sichern
-  LDR R0, = 0xF0            // Wartezeit einstellen      
+  LDR R0, = 0xFFF            // Wartezeit einstellen      
 
 delay_loop:
   SUBS R0, #1
