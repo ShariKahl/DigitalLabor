@@ -260,12 +260,11 @@
         <configuration Name="Debug" build_exclude_from_build="Yes" />
       </file>
       <file file_name="Source/Aufgabe5_3.s">
-        <configuration Name="Debug" build_exclude_from_build="No" />
+        <configuration Name="Debug" build_exclude_from_build="Yes" />
       </file>
     </folder>
     <folder Name="System">
       <file file_name="System/ARM_Startup_Hardware.s" />
-      <file file_name="System/crt0.s" />
     </folder>
   </project>
   <project Name="Aufgabe6">
